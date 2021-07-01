@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,8 @@ class PostController extends Controller
     public function index()
     {
         //
-
-        return view('admin.posts.index');
+        $posts = Post::all();
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -49,6 +50,7 @@ class PostController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
