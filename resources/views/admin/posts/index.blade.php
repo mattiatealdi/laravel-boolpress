@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container">
-    <h1>I miei Posts</h1>
+    <h1>My Posts</h1>
+    @if (session('deleted'))
+        <span class="alert alert-success"><strong>{{ session('deleted') }}</strong> Deleted correctly</span>
+    @endif
     <table class="table">
         <thead>
             <tr>
@@ -18,7 +21,13 @@
                     <td>{{ $post->title }}</td>
                     <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post) }}">SHOW</a></td>
                     <td><a class="btn btn-secondary" href="{{ route('admin.posts.edit', $post) }}">EDIT</a></td>
-                    <td><a class="btn btn-danger" href="{{ route('admin.posts.destroy', $post) }}">DELETE</a></td>
+                    <td>
+                        <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">DELETE</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
