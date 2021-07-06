@@ -27,6 +27,13 @@
                             -
                         @endif
                     </td>
+                    <td>
+                        @forelse ($post->tags as $tag)
+                            <span class="badge badge-primary">{{ $tag->name }}</span>
+                        @empty
+                            -
+                        @endforelse
+                    </td>
                     <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post) }}">SHOW</a></td>
                     <td><a class="btn btn-secondary" href="{{ route('admin.posts.edit', $post) }}">EDIT</a></td>
                     <td>
