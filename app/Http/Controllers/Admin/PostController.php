@@ -74,11 +74,12 @@ class PostController extends Controller
     public function show($id)
     {
         //
+
         $post = Post::find($id);
         if(!$post){
             abort(404);
         }
-        return view('admin.posts.show', compact('post'));
+        return view('admin.posts.show', compact('post','categories', 'tags'));
 
     }
 
@@ -91,11 +92,14 @@ class PostController extends Controller
     public function edit($id)
     {
         //
+
         $post = Post::find($id);
+        $categories = Category::all();
+        $tags = Tag::all();
         if(!$post){
             abort(404);
         }
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
