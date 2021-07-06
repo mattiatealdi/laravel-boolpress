@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-
+use App\Category;
 use App\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
 class PostController extends Controller
 {
     /**
@@ -20,7 +20,8 @@ class PostController extends Controller
     {
         //
         $posts = Post::all();
-        return view('admin.posts.index', compact('posts'));
+        $categories = Category::all();
+        return view('admin.posts.index', compact('posts', 'categories'));
     }
 
     /**
@@ -31,7 +32,9 @@ class PostController extends Controller
     public function create()
     {
         //
-        return view('admin.posts.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -56,6 +59,9 @@ class PostController extends Controller
         $new_post = new Post();
         $new_post->fill($data);
         $new_post->save();
+        if(array_key_exists('tags', $data)){
+            $new_post->tags()->attach($data['tags']);
+        }
         return redirect()->route('admin.posts.show', $new_post);
     }
 

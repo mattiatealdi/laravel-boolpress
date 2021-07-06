@@ -31,6 +31,33 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label class="label-control" for="category_id">Categories</label>
+                <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
+                    <option value="">Select a category</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                    <p class="text-danger">
+                        {{ $message }}
+                    </p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <h3>Tags</h3>
+                @foreach ($tags as $tag)
+                    <span class="d-inline-block mr-3 ">
+                        <input type="checkbox" id="tag{{ $loop->iteration }}" name="tags[]" value="{{ $tag->id }}"
+                        @if (in_array($tag->id, old('tags', []))) checked
+                        @endif>
+                        <label for="tag{{ $loop->iteration }}">{{ $tag->name }}</label>
+                    </span>
+                @endforeach
+            </div>
+
             <div>
                 <button class="btn btn-primary" type="submit">Submit</button>
                 <button class="btn btn-secondary" type="reset">Reset</button>

@@ -27,6 +27,8 @@ class PostRequest extends FormRequest
             //
             'title'=>'required|max:255',
             'content'=>'required|min:5',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id',
         ];
     }
 
@@ -36,6 +38,8 @@ class PostRequest extends FormRequest
             'content.required' => 'Content is required',
             'title.max'=> 'Too many characters ',
             'content.min' => 'Need more characters',
+            'category_id.exists => Unavailible category',
+            'tags.exists => Unavailible tag',
         ];
     }
 }
