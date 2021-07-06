@@ -12,6 +12,11 @@
         @endif
     </p>
     <div>
+        @foreach ($post->tags as $tag)
+            <span class="badge badge-primary">{{ $tag->name }}</span>
+        @endforeach
+    </div>
+    <div>
         <a class="btn btn-primary" href="{{ route('admin.posts.edit', $post) }}">EDIT</a>
     </div>
 </div>
