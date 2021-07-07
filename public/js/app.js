@@ -3150,31 +3150,35 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("div", [
-            _c(
-              "button",
-              {
-                staticClass: "badge badge-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.getPosts(_vm.pagination_current - 1)
-                  }
-                }
-              },
-              [_vm._v("prev")]
-            ),
+            _vm.pagination.current > 1
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "badge badge-primary",
+                    on: {
+                      click: function($event) {
+                        return _vm.getPosts(_vm.pagination.current - 1)
+                      }
+                    }
+                  },
+                  [_vm._v("prev")]
+                )
+              : _vm._e(),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "badge badge-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.getPosts(_vm.pagination_current + 1)
-                  }
-                }
-              },
-              [_vm._v("next")]
-            )
+            _vm.pagination.current < _vm.pagination.last
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "badge badge-primary",
+                    on: {
+                      click: function($event) {
+                        return _vm.getPosts(_vm.pagination.current + 1)
+                      }
+                    }
+                  },
+                  [_vm._v("next")]
+                )
+              : _vm._e()
           ])
         ],
         2
