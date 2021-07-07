@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Boolpress</title>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
-    <h1>Boolpress</h1>
+    <div id="app">
 
+    </div>
 </body>
 </html>
