@@ -9,8 +9,8 @@
                 <h5>{{ formatDate(post.date) }}</h5>
             </article>
             <div>
-                    <button class="badge badge-primary">prev</button>
-                    <button class="badge badge-primary">next</button>
+                    <button @click="getPosts(pagination_current - 1)" class="badge badge-primary">prev</button>
+                    <button @click="getPosts(pagination_current + 1)" class="badge badge-primary">next</button>
                 </div>
         </main>
     </div>
@@ -33,8 +33,12 @@ export default {
         }
     },
     methods: {
-        getPosts(){
-            axios.get('http://localhost:8000/api/posts')
+        getPosts(page = 1){
+            axios.get('http://localhost:8000/api/posts', {
+                params : {
+                    page :page
+                }
+            })
                 .then(res => {
                     this.posts = res.data.data;
                     this.pagination = {

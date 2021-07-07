@@ -1946,7 +1946,12 @@ __webpack_require__.r(__webpack_exports__);
     getPosts: function getPosts() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8000/api/posts').then(function (res) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('http://localhost:8000/api/posts', {
+        params: {
+          page: page
+        }
+      }).then(function (res) {
         _this.posts = res.data.data;
         _this.pagination = {
           current: res.data.current_page,
@@ -3144,7 +3149,33 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", [
+            _c(
+              "button",
+              {
+                staticClass: "badge badge-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.getPosts(_vm.pagination_current - 1)
+                  }
+                }
+              },
+              [_vm._v("prev")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "badge badge-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.getPosts(_vm.pagination_current + 1)
+                  }
+                }
+              },
+              [_vm._v("next")]
+            )
+          ])
         ],
         2
       )
@@ -3152,18 +3183,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("button", { staticClass: "badge badge-primary" }, [_vm._v("prev")]),
-      _vm._v(" "),
-      _c("button", { staticClass: "badge badge-primary" }, [_vm._v("next")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
