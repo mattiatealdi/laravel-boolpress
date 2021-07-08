@@ -21,6 +21,7 @@ class PostController extends Controller
         ->select('posts.id', 'posts.title', 'posts.content', 'posts.created_at as date', 'categories.name as category')
         ->join('categories', 'posts.category_id', 'category_id')
         ->paginate(5);
+        /* $posts = Post::with(['category', 'tags'])->get(); */
         return response()->json($posts);
     }
 
