@@ -88,7 +88,7 @@ export default {
         return{
             posts: [],
             pagination: {},
-            loaded: false
+            loaded: false,
         }
     },
     methods:{

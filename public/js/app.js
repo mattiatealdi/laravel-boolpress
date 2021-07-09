@@ -2275,9 +2275,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("localhost/8000/api/posts/" + this.$route.params.slug).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts/' + this.$route.params.slug).then(function (res) {
       if (res.data.success) {
         _this.post = res.data.data;
+        console.log(_this.post);
       }
       /* else{
          this.$router.push({name: 'error404'});

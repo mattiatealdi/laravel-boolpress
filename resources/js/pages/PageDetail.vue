@@ -33,17 +33,18 @@ export default {
         }
     },
     mounted(){
-        axios.get("localhost/8000/api/posts/"+this.$route.params.slug)
+        axios.get('http://127.0.0.1:8000/api/posts/'+this.$route.params.slug)
         .then(res =>{
             if(res.data.success){
                 this.post = res.data.data;
+                console.log(this.post);
             }/* else{
                 this.$router.push({name: 'error404'});
             } */
         })
         .catch(err => {
             console.log(err);
-        })
+        });
     }
 }
 </script>
