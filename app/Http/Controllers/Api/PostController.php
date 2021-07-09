@@ -18,43 +18,27 @@ class PostController extends Controller
     {
         //
         $posts = DB::table('posts')
-        ->select('posts.id', 'posts.title', 'posts.content', 'posts.created_at as date', 'categories.name as category')
+        ->select('posts.id', 'posts.title', 'posts.content', 'posts.slug', 'posts.created_at as date', 'categories.name as category')
         ->join('categories', 'posts.category_id', 'category_id')
         ->paginate(5);
         /* $posts = Post::with(['category', 'tags'])->get(); */
         return response()->json($posts);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show($slug)
     {
         //
-    }
+        $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
+        if($post){
+            $data=[
+                'success' => true,
+                'data' => $post,
+            ];
+            return response()->json($data);
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        return response()->json(['success' => false]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

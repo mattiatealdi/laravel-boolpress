@@ -1,48 +1,112 @@
 <template>
-    <div class="container">
-        <main class="container">
-            <h1>I nostri Posts</h1>
-            <article class="mb-2" v-for="post in posts" :key="post.id">
-                <h3>{{ post.title }}</h3>
-                <h6>{{ post.category }}</h6>
-                <h5>{{ formatDate(post.date) }}</h5>
-            </article>
+  <div>
+      <h1>Il mio Blog</h1>
+
+
+            <!-- loader -->
+            <div v-if="!loaded" class="text-center mt-5">
+                <Loader />
+            </div>
+
+
+        <!-- wrapper posts -->
+        <div v-if="loaded">
+
+
+
+            <!-- lista posts -->
+            <Card
+            v-for="post in posts"
+            :key="'p'+post.id"
+            :title ="post.title"
+            :content ="post.content"
+            :date ="formatDate(post.date )"
+            :category ="post.category"
+            :slug="post.slug"
+           />
+
+
+
+            <!-- paginazione -->
             <div>
-                    <button v-if="pagination.current > 1" @click="getPosts(pagination.current - 1)" class="badge badge-primary">prev</button>
-                    <button v-if="pagination.current < pagination.last" @click="getPosts(pagination.current + 1)" class="badge badge-primary">next</button>
-                </div>
-        </main>
-    </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li
+                        :class="{'disabled': pagination.current === 1}"
+                        class="page-item">
+                            <button
+                            @click="getPosts(pagination.current - 1)"
+                            class="page-link" >&laquo;</button>
+                        </li>
+
+                        <li
+                        v-for="i in pagination.last"
+                        :key="'i'+i"
+                        :class="{'active' : pagination.current === i}"
+                        class="page-item">
+                            <button
+                            @click="getPosts(i)"
+                             class="page-link">{{ i }}</button></li>
+
+
+                        <li
+                        :class="{'disabled': pagination.current === pagination.last}"
+                        class="page-item">
+                            <button
+                            @click="getPosts(pagination.current + 1)"
+                            class="page-link" >&raquo;</button>
+                        </li>
+                    </ul>
+                </nav>
+
+
+            </div>
+            <!-- end wrapper posts -->
+
+
+
+      </div>
+  </div>
 </template>
 
 <script>
-
-
 import axios from 'axios';
+import Loader from '../components/Loader.vue';
+import Card from '../components/Card.vue';
+
+/* import Loader from '../components/Loader.vue' */
 
 
 export default {
+  components: {
+      Loader,
+       Card
+    },
     name: 'Blog',
 
     data(){
-        return {
-            posts : [],
-            pagination : {}
+        return{
+            posts: [],
+            pagination: {},
+            loaded: false
         }
     },
-    methods: {
+    methods:{
         getPosts(page = 1){
-            axios.get('http://localhost:8000/api/posts', {
-                params : {
+            this.loaded = false;
+            axios.get('http://127.0.0.1:8000/api/posts',{
+                params:{
                     page: page
                 }
             })
                 .then(res => {
+                    console.log(res.data.data);
                     this.posts = res.data.data;
                     this.pagination = {
                         current: res.data.current_page,
-                        last : res.data.last_page
+                        last: res.data.last_page
                     }
+                    this.loaded = true;
                 })
                 .catch(err => {
                     console.log(err);
@@ -51,8 +115,10 @@ export default {
         formatDate(date){
             let d = new Date(date);
             let dy = d.getDate();
-            let m = d.getMonth();
+            let m = d.getMonth() + 1;
             let y = d.getFullYear();
+            if(dy < 10) dy = '0' + dy;
+            if(m < 10) m = '0' + m;
             return `${dy}/${m}/${y}`;
         }
     },
@@ -62,9 +128,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
-     @import '../../sass/frontoffice/_global.scss';
-
+<style lang="scss" scoped>
 
 </style>

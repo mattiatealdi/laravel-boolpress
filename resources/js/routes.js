@@ -7,6 +7,7 @@ import Home from './pages/Home.vue';
 import About from './pages/About.vue';
 import Blog from './pages/Blog.vue';
 import Contacts from './pages/Blog.vue';
+import PageDetail from './pages/PageDetail.vue';
 
 const router = new VueRouter({
     mode: 'history',
@@ -30,6 +31,11 @@ const router = new VueRouter({
             path: '/contacts',
             name: 'contacts',
             component: Contacts,
+        },
+        {
+            path: '/post/:slug',
+            name: 'pageDetail',
+            component: PageDetail,
         },
     ]
 });
