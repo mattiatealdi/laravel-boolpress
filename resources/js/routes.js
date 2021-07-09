@@ -37,6 +37,11 @@ const router = new VueRouter({
             name: 'pageDetail',
             component: PageDetail,
         },
+        /* {
+            path: '/*',
+            name: 'error404',
+            component: Error404,
+        }, */
     ]
 });
 
